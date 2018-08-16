@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 Jonathan Linat
+ * Copyright (c) 2018 Jonathan Linat <https://www.github.com/jonathanlinat>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,5 +22,20 @@
  * SOFTWARE.
  */
 
-$body-color: #444
-$body-background-color: #eee
+import Segment from '../utils/geometry'
+import Drawing from '../utils/drawing'
+
+export default class LineSegment extends Segment {
+  constructor (startPositionX = 0, startPositionY = 0, endPositionX = 0, endPositionY = 0, lineWidth = 0, color = '') {
+    super(startPositionX, startPositionY, endPositionX, endPositionY)
+
+    this.lineWidth = lineWidth
+    this.color = color
+
+    this.drawing = new Drawing()
+  }
+
+  render (canvas = {}) {
+    this.drawing.drawSegment(canvas, this.startPositionX, this.startPositionY, this.endPositionX, this.endPositionY, this.lineWidth, this.color)
+  }
+}

@@ -1,4 +1,3 @@
-<!--
 /*
  * MIT License
  *
@@ -22,16 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
--->
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ES6 Experiments Series: Buffon's needle</title>
-  </head>
-  <body>
-  </body>
-</html>
+import Drawing from './drawing'
+
+export default class Canvas {
+  constructor (context = '', width = 0, height = 0) {
+    this.canvas = document.createElement('canvas')
+    this.canvas.context = this.canvas.getContext(context)
+    this.canvas.width = width
+    this.canvas.height = height
+
+    this.drawing = new Drawing()
+  }
+
+  get context () { return this.canvas.context }
+
+  get width () { return this.canvas.width }
+  get height () { return this.canvas.height }
+
+  get top () { return this.canvas.height - this.canvas.height }
+  get left () { return this.canvas.width - this.canvas.width }
+  get right () { return this.canvas.width }
+  get bottom () { return this.canvas.height }
+
+  get centerX () { return this.canvas.width / 2 }
+  get centerY () { return this.canvas.height / 2 }
+
+  create () {
+    document.body.appendChild(this.canvas)
+  }
+}

@@ -1,4 +1,3 @@
-<!--
 /*
  * MIT License
  *
@@ -22,16 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
--->
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ES6 Experiments Series: Buffon's needle</title>
-  </head>
-  <body>
-  </body>
-</html>
+export class Vect {
+  constructor (axisX = 0, axisY = 0) {
+    this.x = axisX
+    this.y = axisY
+  }
+}
+
+export default class Segment {
+  constructor (startPositionX = 0, startPositionY = 0, endPositionX = 0, endPositionY = 0) {
+    this.position = {
+      endPointA: new Vect(startPositionX, startPositionY),
+      endPointB: new Vect(endPositionX, endPositionY)
+    }
+  }
+
+  set startPositionX (value = 0) { this.position.endPointA.x = value | 0 }
+  set startPositionY (value = 0) { this.position.endPointA.y = value | 0 }
+  set endPositionX (value = 0) { this.position.endPointB.x = value | 0 }
+  set endPositionY (value = 0) { this.position.endPointB.y = value | 0 }
+
+  get startPositionX () { return this.position.endPointA.x }
+  get startPositionY () { return this.position.endPointA.y }
+  get endPositionX () { return this.position.endPointB.x }
+  get endPositionY () { return this.position.endPointB.y }
+}

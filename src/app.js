@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 Jonathan Linat
+ * Copyright (c) 2018 Jonathan Linat <https://www.github.com/jonathanlinat>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,60 @@
  * SOFTWARE.
  */
 
-import log from './modules/js/log'
+import Canvas from './modules/utils/canvas'
+import LineSegment from './modules/elements/linesegment'
 
-if (module.hot) module.hot.accept()
+class App {
+  constructor () {
+    this.canvas = new Canvas('2d', window.innerWidth, window.innerHeight)
 
-const yo = Symbol('')
+    this.verticalLineColor = '#38c'
+    this.neutralNeedleColor = '#bbb'
+    this.crushedNeedleColor = '#e43'
 
-// eslint-disable-next-line
-String.prototype[yo] = () => 'Yo 👋'
+    this.lineSegmentWidth = 2
+    this.needleLength = this.canvas.width / 8
+    this.generatedNeedles = 10 ** 3
+    this.crushedNeedles = 0
 
-log(''[yo]())
+    this.verticalLines = []
+    for (let v = 0; v < (this.canvas.width / this.needleLength) + 1; v++) {
+      const spaceBetweenEachVerticalLine = this.needleLength * v
+
+      this.verticalLines.push(new LineSegment(spaceBetweenEachVerticalLine, 0, spaceBetweenEachVerticalLine, this.canvas.height, this.lineSegmentWidth, this.verticalLineColor))
+    }
+
+    this.needles = []
+    for (let n = 0; n < this.generatedNeedles; n++) {
+      const θ = 2 * Math.PI * Math.random()
+      const startPositionX = Math.random() * this.canvas.width
+      const startPositionY = Math.random() * this.canvas.height
+      const endPositionX = startPositionX + (this.needleLength * Math.cos(θ))
+      const endPositionY = startPositionY + (this.needleLength * Math.sin(θ))
+
+      this.needles.push(new LineSegment(startPositionX, startPositionY, endPositionX, endPositionY, this.lineSegmentWidth, this.neutralNeedleColor))
+
+      this.verticalLines.forEach(verticalLine => {
+        if ((this.needles[n].startPositionX <= verticalLine.startPositionX && this.needles[n].endPositionX >= verticalLine.endPositionX) || (this.needles[n].startPositionX >= verticalLine.startPositionX && this.needles[n].endPositionX <= verticalLine.endPositionX)) {
+          this.needles[n].color = this.crushedNeedleColor
+          this.crushedNeedles++
+        }
+      })
+    }
+
+    this.approximateValueOfPi = 2 / (this.crushedNeedles / this.generatedNeedles)
+    console.log(this.approximateValueOfPi)
+  }
+
+  initialize () {
+    this.canvas.create()
+    if (this.canvas) {
+      this.verticalLines.forEach(verticalLine => verticalLine.render(this.canvas))
+      this.needles.forEach(needle => needle.render(this.canvas))
+    }
+  }
+}
+
+(function () {
+  new App().initialize()
+})()
