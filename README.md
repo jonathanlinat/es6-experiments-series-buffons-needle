@@ -1,6 +1,6 @@
 # ES6 Experiments Series: Buffon's needle
 
-![Buffon's needle](https://image.ibb.co/cowVse/buffons_needle_github.png)
+![Buffon's needle](https://image.ibb.co/bHhydK/buffons_needle_github.png)
 
 Suppose we have a floor made of parallel strips of wood, each the same width, and we drop a needle onto the floor. What is the probability that the needle will lie across a line between two strips?
 
