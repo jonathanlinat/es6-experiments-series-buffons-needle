@@ -3,7 +3,7 @@
   "description": "An ES6 implementation of the Buffon's needle classic Monte Carlo simulation.",
   "author": "Jonathan Linat (https://github.com/jonathanlinat)",
   "homepage": "https://github.com/jonathanlinat/es6-experiments-series-buffons-needle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",

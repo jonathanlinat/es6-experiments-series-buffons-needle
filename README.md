@@ -41,7 +41,7 @@ The _compiled_ version of the project will be available into the `dist` folder.
 
 ## Usage
 
-When a local Web Server is created and a new tab in your browser is opened, check your developper console to get the final approximation value of Pi displayed.
+When a local Web Server is created and a new tab in your browser is opened, check your developer console to get the final approximation value of Pi displayed.
 
 Refresh the tab pressing the `F5` key to regenerate the needles and vertical lines.
 
