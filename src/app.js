@@ -34,7 +34,7 @@ class App {
     this.crushedNeedleColor = '#e43'
 
     this.lineSegmentWidth = 2
-    this.needleLength = this.canvas.width / 8
+    this.needleLength = this.canvas.width / 16
     this.generatedNeedles = 10 ** 3
     this.crushedNeedles = 0
 
