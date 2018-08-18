@@ -29,49 +29,93 @@ class App {
   constructor () {
     this.canvas = new Canvas('2d', window.innerWidth, window.innerHeight)
 
-    this.verticalLineColor = '#38c'
-    this.neutralNeedleColor = '#bbb'
-    this.crushedNeedleColor = '#e43'
-
     this.lineSegmentWidth = 2
     this.needleLength = this.canvas.width / 16
-    this.generatedNeedles = 10 ** 3
-    this.crushedNeedles = 0
-
-    this.verticalLines = []
-    for (let v = 0; v < (this.canvas.width / this.needleLength) + 1; v++) {
-      const spaceBetweenEachVerticalLine = this.needleLength * v
-
-      this.verticalLines.push(new LineSegment(spaceBetweenEachVerticalLine, 0, spaceBetweenEachVerticalLine, this.canvas.height, this.lineSegmentWidth, this.verticalLineColor))
+    this.amountOf = {
+      generatedNeedles: 10 ** 3.5,
+      crushedNeedles: 0
     }
-
-    this.needles = []
-    for (let n = 0; n < this.generatedNeedles; n++) {
-      const θ = 2 * Math.PI * Math.random()
-      const startPositionX = Math.random() * this.canvas.width
-      const startPositionY = Math.random() * this.canvas.height
-      const endPositionX = startPositionX + (this.needleLength * Math.cos(θ))
-      const endPositionY = startPositionY + (this.needleLength * Math.sin(θ))
-
-      this.needles.push(new LineSegment(startPositionX, startPositionY, endPositionX, endPositionY, this.lineSegmentWidth, this.neutralNeedleColor))
-
-      this.verticalLines.forEach(verticalLine => {
-        if ((this.needles[n].startPositionX <= verticalLine.startPositionX && this.needles[n].endPositionX >= verticalLine.endPositionX) || (this.needles[n].startPositionX >= verticalLine.startPositionX && this.needles[n].endPositionX <= verticalLine.endPositionX)) {
-          this.needles[n].color = this.crushedNeedleColor
-          this.crushedNeedles++
-        }
-      })
+    this.colors = {
+      verticalLine: '#38c',
+      neutralNeedle: '#bbb',
+      crushedNeedle: '#e43'
     }
+    this.theMagicalNumber = {
+      fontProperties: '48pt Helvetica',
+      textAlign: 'center',
+      textBaseline: 'middle'
+    }
+    this.generated = {
+      verticalLines: [],
+      needles: []
+    }
+  }
 
-    this.approximateValueOfPi = 2 / (this.crushedNeedles / this.generatedNeedles)
-    console.log(this.approximateValueOfPi)
+  generateVerticalLines (canvas = {}, generatedVerticalLines = [], needleLength = 0, lineSegmentWidth = 0, verticalLineColor = '') {
+    for (let v = 0; v < (canvas.width / needleLength) + 1; v++) {
+      const spaceBetweenEachVerticalLine = needleLength * v
+
+      generatedVerticalLines.push(new LineSegment(spaceBetweenEachVerticalLine, 0, spaceBetweenEachVerticalLine, canvas.height, lineSegmentWidth, verticalLineColor))
+    }
+  }
+
+  _checkIfNeedleIsCrushingAVerticalLine (generatedVerticalLines = [], singleNeedle = [], crushedNeedleColor = '') {
+    generatedVerticalLines.forEach(verticalLine => {
+      if ((singleNeedle.startPositionX <= verticalLine.startPositionX && singleNeedle.endPositionX >= verticalLine.endPositionX) || (singleNeedle.startPositionX >= verticalLine.startPositionX && singleNeedle.endPositionX <= verticalLine.endPositionX)) {
+        singleNeedle.color = crushedNeedleColor
+        this.amountOf.crushedNeedles++
+      }
+    })
+  }
+
+  generateNeedles (canvas = {}, generatedVerticalLines = [], generatedNeedles = [], amountOfGeneratedNeedles = 0, needleLength = 0, lineSegmentWidth = 0, neutralNeedleColor = '', crushedNeedleColor = '') {
+    const π = Math.PI
+    const θ = 2 * π
+
+    for (let n = 0; n < amountOfGeneratedNeedles; n++) {
+      const randθ = θ * Math.random()
+      const startPositionX = canvas.width * Math.random()
+      const startPositionY = canvas.height * Math.random()
+      const endPositionX = startPositionX + (needleLength * Math.cos(randθ))
+      const endPositionY = startPositionY + (needleLength * Math.sin(randθ))
+
+      generatedNeedles.push(new LineSegment(startPositionX, startPositionY, endPositionX, endPositionY, lineSegmentWidth, neutralNeedleColor))
+
+      this._checkIfNeedleIsCrushingAVerticalLine(generatedVerticalLines, generatedNeedles[n], crushedNeedleColor)
+    }
+  }
+
+  _calculateProbability (amountOfCrushedNeedles = 0, amountOfGeneratedNeedles = 0) {
+    return amountOfCrushedNeedles / amountOfGeneratedNeedles
+  }
+
+  _calculateTheMagicalNumber (amountOfCrushedNeedles = 0, amountOfGeneratedNeedles = 0) {
+    return 2 / this._calculateProbability(amountOfCrushedNeedles, amountOfGeneratedNeedles)
+  }
+
+  _drawTheMagicalNumber (canvas = {}, amountOfCrushedNeedles = 0, amountOfGeneratedNeedles = 0, theMagicalNumberFontProperties = '', theMagicalNumberTextAlign = '', theMagicalNumberTextBaseline = '') {
+    const calculatedTheMagicalNumber = (this._calculateTheMagicalNumber(amountOfCrushedNeedles, amountOfGeneratedNeedles)).toFixed(6)
+
+    canvas.context.font = theMagicalNumberFontProperties
+    canvas.context.textAlign = theMagicalNumberTextAlign
+    canvas.context.textBaseline = theMagicalNumberTextBaseline
+    canvas.context.fillText(calculatedTheMagicalNumber, canvas.width / 2, canvas.height / 2)
+  }
+
+  render (canvas = {}, generatedVerticalLines = [], generatedNeedles = [], amountOfCrushedNeedles = 0, amountOfGeneratedNeedles = 0, theMagicalNumberFontProperties = '', theMagicalNumberTextAlign = '', theMagicalNumberTextBaseline = '') {
+    generatedVerticalLines.forEach(verticalLine => verticalLine.render(canvas))
+    generatedNeedles.forEach(needle => needle.render(canvas))
+
+    this._drawTheMagicalNumber(canvas, amountOfCrushedNeedles, amountOfGeneratedNeedles, theMagicalNumberFontProperties, theMagicalNumberTextAlign, theMagicalNumberTextBaseline)
   }
 
   initialize () {
     this.canvas.create()
+
     if (this.canvas) {
-      this.verticalLines.forEach(verticalLine => verticalLine.render(this.canvas))
-      this.needles.forEach(needle => needle.render(this.canvas))
+      this.generateVerticalLines(this.canvas, this.generated.verticalLines, this.needleLength, this.lineSegmentWidth, this.colors.verticalLine)
+      this.generateNeedles(this.canvas, this.generated.verticalLines, this.generated.needles, this.amountOf.generatedNeedles, this.needleLength, this.lineSegmentWidth, this.colors.neutralNeedle, this.colors.crushedNeedle)
+      this.render(this.canvas, this.generated.verticalLines, this.generated.needles, this.amountOf.crushedNeedles, this.amountOf.generatedNeedles, this.theMagicalNumber.fontProperties, this.theMagicalNumber.textAlign, this.theMagicalNumber.textBaseline)
     }
   }
 }

@@ -1,6 +1,6 @@
 # ES6 Experiments Series: Buffon's needle
 
-![Buffon's needle](https://image.ibb.co/bHhydK/buffons_needle_github.png)
+![Buffon's needle](https://image.ibb.co/eJ02Qz/buffons_needle_github.png)
 
 Suppose we have a floor made of parallel strips of wood, each the same width, and we drop a needle onto the floor. What is the probability that the needle will lie across a line between two strips? [Wikipedia](https://en.wikipedia.org/wiki/Buffon%27s_needle)
 
@@ -41,7 +41,7 @@ The _compiled_ version of the project will be available into the `dist` folder.
 
 ## Usage
 
-When a local Web Server is created and a new tab in your browser is opened, check your developer console to get the final approximation value of Pi displayed.
+When a local Web Server is created and a new tab in your browser is opened, discover what's the Magical Number.
 
 Press the `F5` key in order to regenerate the needles and vertical lines.
 
