@@ -15,7 +15,6 @@ module.exports = (env, options) => {
   let webpackConfig = {
     entry: {
       app: [
-        'babel-polyfill',
         src + '/app.js',
         src + '/app.sass',
         src + '/index.html'
