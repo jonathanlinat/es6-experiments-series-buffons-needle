@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2018 Jonathan Linat <https://www.github.com/jonathanlinat>
@@ -120,6 +120,4 @@ class App {
   }
 }
 
-(function () {
-  new App().initialize()
-})()
+new App().initialize()

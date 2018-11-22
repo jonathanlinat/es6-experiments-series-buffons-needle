@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2018 Jonathan Linat <https://www.github.com/jonathanlinat>
@@ -22,16 +22,12 @@
  * SOFTWARE.
  */
 
-import Drawing from './drawing'
-
 export default class Canvas {
   constructor (context = '', width = 0, height = 0) {
     this.canvas = document.createElement('canvas')
     this.canvas.context = this.canvas.getContext(context)
     this.canvas.width = width
     this.canvas.height = height
-
-    this.drawing = new Drawing()
   }
 
   get context () { return this.canvas.context }

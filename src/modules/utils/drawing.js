@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2018 Jonathan Linat <https://www.github.com/jonathanlinat>
