@@ -29,6 +29,14 @@ Start a local Web Server.
 $ npm run dev
 ```
 
+### Run unit tests
+
+Start Jest in order to unit test the application.
+
+```
+$ npm run test
+```
+
 ### Build a Production version
 
 Create a Production version of the project.
