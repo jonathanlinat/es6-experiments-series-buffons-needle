@@ -3,7 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 
 module.exports = (env, options) => {
@@ -20,13 +20,16 @@ module.exports = (env, options) => {
         src + '/index.html'
       ]
     },
+    output: {
+      path: dist
+    },
     devServer: {
       host: '127.0.0.1',
       open: true,
       hot: true
     },
     plugins: [
-      new CleanWebpackPlugin([dist]),
+      new CleanWebpackPlugin(),
       new MiniCssExtractPlugin(),
       new HtmlWebPackPlugin({
         template: src + '/index.html'
