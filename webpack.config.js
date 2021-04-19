@@ -1,41 +1,37 @@
-const path = require('path')
-const TerserPlugin = require('terser-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const webpack = require('webpack')
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = (env, options) => {
-  const isProductionMode = (options.mode === 'production')
+  const isProductionMode = options.mode === 'production';
 
-  const src = path.resolve('./src')
-  const dist = path.resolve('./dist')
+  const srcPath = path.resolve(__dirname, './src');
+  const distPath = path.resolve(__dirname, './dist');
 
-  let webpackConfig = {
+  const webpackConfig = {
     entry: {
-      app: [
-        src + '/app.js',
-        src + '/app.sass',
-        src + '/index.html'
-      ]
+      app: [srcPath + '/app.js', srcPath + '/app.sass', srcPath + '/index.html'],
     },
     output: {
-      path: dist
+      path: distPath,
     },
     devServer: {
       host: '127.0.0.1',
       open: true,
-      hot: true
+      hot: true,
     },
     plugins: [
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin(),
       new HtmlWebPackPlugin({
-        template: src + '/index.html'
+        template: srcPath + '/index.html',
       }),
       new webpack.NamedModulesPlugin(),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
     ],
     module: {
       rules: [
@@ -43,7 +39,7 @@ module.exports = (env, options) => {
           enforce: 'pre',
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'eslint-loader'
+          loader: 'eslint-loader',
         },
         {
           test: /\.js$/,
@@ -51,23 +47,19 @@ module.exports = (env, options) => {
           use: {
             loader: 'babel-loader',
             options: {
-              babelrc: false
-            }
-          }
+              presets: ['@babel/preset-env'],
+            },
+          },
         },
         {
           test: /\.sass$/,
-          use: [
-            isProductionMode ? MiniCssExtractPlugin.loader : 'style-loader',
-            'css-loader',
-            'sass-loader'
-          ]
+          use: [isProductionMode ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'sass-loader'],
         },
         {
           test: /\.html$/,
-          use: 'html-loader'
-        }
-      ]
+          use: 'html-loader',
+        },
+      ],
     },
     optimization: {
       minimize: isProductionMode,
@@ -75,7 +67,7 @@ module.exports = (env, options) => {
         new TerserPlugin(),
         new OptimizeCSSAssetsPlugin(),
         new HtmlWebPackPlugin({
-          template: src + '/index.html',
+          template: srcPath + '/index.html',
           hash: true,
           cache: true,
           minify: {
@@ -92,12 +84,12 @@ module.exports = (env, options) => {
             removeStyleLinkTypeAttributes: true,
             sortAttributes: true,
             sortClassName: true,
-            useShortDoctype: true
-          }
-        })
-      ]
-    }
-  }
+            useShortDoctype: true,
+          },
+        }),
+      ],
+    },
+  };
 
-  return webpackConfig
-}
+  return webpackConfig;
+};

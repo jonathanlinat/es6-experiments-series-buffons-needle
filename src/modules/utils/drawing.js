@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2018-2019 Jonathan Linat <https://github.com/jonathanlinat>
+ * Copyright (c) 2018-2021 Jonathan Linat <https://github.com/jonathanlinat>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,20 @@
  */
 
 export default class Drawing {
-  drawSegment (canvas = {}, startPositionX = 0, startPositionY = 0, endPositionX = 0, endPositionY = 0, lineWidth = 0, color = '') {
-    canvas.context.lineWidth = lineWidth
-    canvas.context.strokeStyle = color
-    canvas.context.beginPath()
-    canvas.context.moveTo(startPositionX, startPositionY)
-    canvas.context.lineTo(endPositionX, endPositionY)
-    canvas.context.stroke()
+  drawSegment(
+    canvas = {},
+    startPositionX = 0,
+    startPositionY = 0,
+    endPositionX = 0,
+    endPositionY = 0,
+    lineWidth = 0,
+    color = ''
+  ) {
+    canvas.context.lineWidth = lineWidth;
+    canvas.context.strokeStyle = color;
+    canvas.context.beginPath();
+    canvas.context.moveTo(startPositionX, startPositionY);
+    canvas.context.lineTo(endPositionX, endPositionY);
+    canvas.context.stroke();
   }
 }
