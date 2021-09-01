@@ -18,7 +18,7 @@ $ cd es6-experiments-series-buffons-needle/
 ...and install the required NPM packages.
 
 ```
-$ yarn install
+$ npm install
 ```
 
 ### Start a Development server
@@ -26,7 +26,7 @@ $ yarn install
 Start a local Web Server.
 
 ```
-$ yarn dev
+$ npm run dev
 ```
 
 ### Build a Production version
@@ -34,7 +34,7 @@ $ yarn dev
 Create a Production version of the project.
 
 ```
-$ yarn build
+$ npm run build
 ```
 
 The _compiled_ version of the project will be available into the `dist` folder.
