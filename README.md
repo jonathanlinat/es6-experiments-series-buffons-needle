@@ -2,6 +2,8 @@
 
 ![Buffon's needle](https://image.ibb.co/eJ02Qz/buffons_needle_github.png)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f2ff2cae-871a-44a5-bd49-1fc3070acb74/deploy-status)](https://app.netlify.com/sites/es6-experiments-series-buffons-needle/deploys)
+
 Suppose we have a floor made of parallel strips of wood, each the same width, and we drop a needle onto the floor. What is the probability that the needle will lie across a line between two strips? [Wikipedia](https://en.wikipedia.org/wiki/Buffon%27s_needle)
 
 Project architecture mainly based on [Yet Another And Really Basic Webpack ES6 Starterkit](https://github.com/jonathanlinat/yet-another-and-really-basic-webpack-es6-starterkit).
@@ -38,6 +40,14 @@ $ npm run build
 ```
 
 The _compiled_ version of the project will be available into the `dist` folder.
+
+###
+
+It is also possible to lint code.
+
+```
+$ npm run lint
+```
 
 ## Usage
 
